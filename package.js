@@ -1,6 +1,7 @@
 Package.describe({
   summary: 'Servant OAuth flow',
-  version: '0.0.1'
+  version: '0.0.1',
+  name: 'ecwyne:servant'
 });
 
 Package.onUse(function(api) {
