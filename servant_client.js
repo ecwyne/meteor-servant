@@ -26,10 +26,10 @@ Servant.requestCredential = function (options, credentialRequestCompleteCallback
   var loginStyle = OAuth._loginStyle('servant', config, options);
 
   var loginUrl =
-    'https://www.servant.co/connect/oauth2/authorize' +
-    '?response_type=code' + 
-    '&client_id=' + config.client_id +
-    '&state=' + OAuth._stateParam(loginStyle, credentialToken);
+  'https://www.servant.co/connect/oauth2/authorize' +
+  '?response_type=code' + 
+  '&client_id=' + config.client_id +
+  '&state=' + OAuth._stateParam(loginStyle, credentialToken);
 
   OAuth.launchLogin({
     loginService: 'servant',
@@ -40,3 +40,16 @@ Servant.requestCredential = function (options, credentialRequestCompleteCallback
     popupOptions: {width: 900, height: 450}
   });
 };
+
+Accounts.onLogin(function(){
+  var i = Meteor.setInterval(function(){
+    if (Accounts.loginServiceConfiguration.find().count()){
+      console.log('initializing Servant sdk');
+      window.Servant.initialize({
+        application_client_id: Package['service-configuration'].ServiceConfiguration.configurations.findOne().client_id,
+        token: Meteor.user().services.servant.accessToken
+      });
+      clearInterval(i);
+    }
+  }, 1000)
+})

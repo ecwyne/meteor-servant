@@ -16,7 +16,6 @@ OAuth.registerService('servant', 2, null, function (query) {
 });
 
 
-
 var getAccessToken = function (query) {
   var config = ServiceConfiguration.configurations.findOne({service: 'servant'});
   if (!config)

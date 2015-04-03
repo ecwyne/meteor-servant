@@ -12,17 +12,19 @@ Package.onUse(function(api) {
   api.use('templating', 'client');
   api.use('random', 'client');
   api.use('service-configuration', ['client', 'server']);
+  api.use('accounts-base');
 
   Npm.depends({
     'servant-sdk-node': '0.0.25'
   });
-  api.export('Servant');
-  api.export('ServantAPI');
-
+  
   api.addFiles(
     ['servant_configure.html', 'servant_configure.js'],
     'client');
-
+  api.addFiles('servant-sdk-javascript.js', 'client');
   api.addFiles('servant_server.js', 'server');
   api.addFiles('servant_client.js', 'client');
+  api.addFiles('servant_api.js', 'server');
+  api.export('Servant');
+  api.export('ServantAPI', 'server');
 });
