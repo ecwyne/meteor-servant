@@ -22,7 +22,7 @@ var getAccessToken = function (query) {
   if (!config)
     throw new ServiceConfiguration.ConfigError();
 
-  ServantAPI = Npm.require('servant-sdk-node')({application_client_id: config.client_id, application_client_secret: OAuth.openSecret(config.client_secret)});
+  ServantAPI = Npm.require('servant-sdk-node')({application_client_id: config.client_id, application_client_secret: OAuth.openSecret(config.secret)});
 
   var response;
   try {
