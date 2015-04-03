@@ -43,11 +43,14 @@ Servant.requestCredential = function (options, credentialRequestCompleteCallback
 
 Accounts.onLogin(function(){
   var i = Meteor.setInterval(function(){
-    if (Accounts.loginServiceConfiguration.find().count()){
+    if (Accounts.loginServiceConfiguration.find().count() && Meteor.user()){
       console.log('initializing Servant sdk');
       window.Servant.initialize({
         application_client_id: Package['service-configuration'].ServiceConfiguration.configurations.findOne().client_id,
         token: Meteor.user().services.servant.accessToken
+      });
+      window.Servant.getUserAndServants(function (data){
+        Meteor.users.update(Meteor.userId(), {$set: {'profile.servants': data.servants}});
       });
       clearInterval(i);
     }
