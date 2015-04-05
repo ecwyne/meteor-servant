@@ -3,9 +3,10 @@ if (config){
 	ServantAPI = Npm.require('servant-sdk-node')({application_client_id: config.client_id, application_client_secret: OAuth.openSecret(config.secret)});
 	for (i in ServantAPI){
 		if (typeof ServantAPI[i] == 'function'){
-			ServantAPI[i] = Meteor.wrapAsync(ServantAPI[i], ServantAPI);
+			ServantAPI[i + 'Sync'] = Meteor.wrapAsync(ServantAPI[i], ServantAPI);
 		}
 	}
 } else {
+	ServantAPI = Npm.require('servant-sdk-node')
 	console.log('Servant has not yet been configured. API calls to servant-sdk-node will break');
 }
